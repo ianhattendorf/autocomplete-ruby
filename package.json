@@ -2,8 +2,23 @@
   "name": "autocomplete-ruby",
   "main": "./lib/autocomplete-ruby",
   "version": "0.0.0",
+  "author": {
+    "name": "Ian Hattendorf",
+    "email": "ianhattendorf@gmail.com",
+    "url": "http://ianhattendorf.com/"
+  },
   "description": "Intelligent Ruby code completion",
+  "keywords": [
+    "autocomplete",
+    "autocomplete-plus",
+    "rsense",
+    "ruby"
+  ],
   "repository": "https://github.com/ianhattendorf/autocomplete-ruby",
+  "homepage": "https://github.com/ianhattendorf/autocomplete-ruby",
+  "bugs": {
+    "url": "https://github.com/ianhattendorf/autocomplete-ruby/issues"
+  },
   "license": "MIT",
   "engines": {
     "atom": ">=0.174.0 <2.0.0"
