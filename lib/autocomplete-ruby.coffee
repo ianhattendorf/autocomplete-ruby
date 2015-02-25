@@ -5,12 +5,10 @@ module.exports =
 
   activate: (state) ->
     @rsenseProvider = new RsenseProvider()
-    return
 
   provideAutocompletion: ->
-    return {providers: [@rsenseProvider]}
+    {providers: [@rsenseProvider]}
 
   deactivate: ->
     @rsenseProvider?.dispose()
     @rsenseProvider = null
-    return

@@ -12,6 +12,7 @@
   },
   "providedServices": {
     "autocomplete.provider": {
+      "description": "Intelligent Ruby code completion",
       "versions": {
         "1.1.0": "provideAutocompletion"
       }
