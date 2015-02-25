@@ -1,4 +1,4 @@
-$ = require('atom').$
+$ = require('jquery')
 String.prototype.replaceAll = (s,r) -> @split(s).join(r)
 
 module.exports =
