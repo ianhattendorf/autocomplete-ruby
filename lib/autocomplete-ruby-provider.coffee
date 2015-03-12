@@ -24,6 +24,8 @@ class RsenseProvider
         if(suggestions?.length)
           @lastSuggestions = suggestions
 
+        # request completion on `.` and `::`
+        return resolve(@lastSuggestions) if options.prefix == '.' || options.prefix == '::'
 
         return resolve(@filterSuggestions(options.prefix, @lastSuggestions))
       )
