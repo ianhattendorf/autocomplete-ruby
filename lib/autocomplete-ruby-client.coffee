@@ -28,6 +28,9 @@ class RsenseClient
       dataType: 'json'
       data: JSON.stringify request
       error: (jqXHR, textStatus, errorThrown) ->
+        # send empty array to callback 
+        # to avoid autocomplete-plus brick
+        callback []
         console.error textStatus
       success: (data, textStatus, jqXHR) ->
         callback data.completions
