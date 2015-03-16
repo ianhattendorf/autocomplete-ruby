@@ -12,7 +12,8 @@ class RsenseClient
     @serverUrl = "http://localhost:#{port}"
 
   checkCompletion: (editor, buffer, row, column, callback) ->
-    code = buffer.getText().replaceAll '\n', '\n'
+    code = buffer.getText().replaceAll('\n', '\n').
+                            replaceAll('%', '%25')
 
     request =
       command: 'code_completion'
