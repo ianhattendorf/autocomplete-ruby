@@ -12,7 +12,8 @@ class RsenseClient
     @serverUrl = "http://localhost:#{port}"
 
   checkCompletion: (editor, buffer, row, column, callback) ->
-    code = buffer.getText().replaceAll '\n', '\n'
+    code = buffer.getText().replaceAll('\n', '\n').
+                            replaceAll('%', '%25')
 
     request =
       command: 'code_completion'
@@ -28,6 +29,9 @@ class RsenseClient
       dataType: 'json'
       data: JSON.stringify request
       error: (jqXHR, textStatus, errorThrown) ->
+        # send empty array to callback
+        # to avoid autocomplete-plus brick
+        callback []
         console.error textStatus
       success: (data, textStatus, jqXHR) ->
         callback data.completions
