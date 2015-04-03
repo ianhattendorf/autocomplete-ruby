@@ -1,7 +1,7 @@
 RsenseClient = require './autocomplete-ruby-client.coffee'
 
 String.prototype.regExpEscape = () ->
-  return @replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+  return @replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")
 
 module.exports =
 class RsenseProvider
@@ -11,7 +11,7 @@ class RsenseProvider
 
   constructor: ->
     @rsenseClient = new RsenseClient()
-    @lastSuggestions = [];
+    @lastSuggestions = []
 
   requestHandler: (options) ->
     return new Promise (resolve) =>
@@ -46,12 +46,12 @@ class RsenseProvider
 
 
   filterSuggestions: (prefix, suggestions) ->
-    suggestionBuffer = [];
+    suggestionBuffer = []
 
     if(!prefix?.length || !suggestions?.length)
       return []
 
-    expression = new RegExp("^"+prefix.regExpEscape(), "i");
+    expression = new RegExp("^"+prefix.regExpEscape(), "i")
 
     for suggestion in suggestions
       if expression.test(suggestion.word)
