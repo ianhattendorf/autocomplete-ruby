@@ -6,7 +6,18 @@ describe "AutocompleteRuby", ->
   beforeEach ->
     workspaceElement = atom.views.getView(atom.workspace)
     activationPromise = atom.packages.activatePackage('autocomplete-ruby')
+    waitsForPromise -> activationPromise
 
   describe "autocomplete-ruby", ->
-    it "contains spec with an expectation", ->
-      expect(true).toBe(true)
+    it 'Starts and stops rsense', ->
+      rsenseProvider = AutocompleteRuby.rsenseProvider
+      rsenseClient = rsenseProvider.rsenseClient
+
+      expect(rsenseClient.rsenseStarted).toBe(false)
+
+      # The first request for autocompletion starts rsense
+      rsenseProvider.requestHandler()
+      expect(rsenseClient.rsenseStarted).toBe(true)
+
+      rsenseClient.stopRsense()
+      expect(rsenseClient.rsenseStarted).toBe(true)
