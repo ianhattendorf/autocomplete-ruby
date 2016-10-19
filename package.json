@@ -24,13 +24,13 @@
     "atom": ">=0.174.0 <2.0.0"
   },
   "dependencies": {
-    "jquery": "^2"
+    "jquery": "^3"
   },
   "providedServices": {
     "autocomplete.provider": {
       "description": "Intelligent Ruby code completion",
       "versions": {
-        "1.1.0": "provideAutocompletion"
+        "2.0.0": "provideAutocompletion"
       }
     }
   }
