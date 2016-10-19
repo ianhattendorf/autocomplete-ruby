@@ -29,7 +29,7 @@ class RsenseClient
         if error == null
 
           port = atom.config.get('autocomplete-ruby.port')
-          exec("#{@rsensePath} start --port #{port} -- path #{@projectPath}",
+          exec("#{@rsensePath} start --port #{port} --path #{@projectPath}",
             (error, stdout, stderr) ->
               if error != null
                 atom.notifications.addError('Error starting rsense',
@@ -71,6 +71,7 @@ class RsenseClient
     $.ajax @serverUrl,
       type: 'POST'
       dataType: 'json'
+      contentType: 'application/json',
       data: JSON.stringify request
       error: (jqXHR, textStatus, errorThrown) ->
         # send empty array to callback

@@ -1,4 +1,5 @@
 .DS_Store
 .c9
+.tags
 npm-debug.log
 node_modules
