@@ -1,43 +1,49 @@
 $ = require('jquery')
+TableParser = require('table-parser')
 exec = require('child_process').exec
 String.prototype.replaceAll = (s, r) -> @split(s).join(r)
 
 module.exports =
 class RsenseClient
-  projectPath: null
-  rsensePath: null
-  serverUrl: null
-  rsenseStarted: null
-
   constructor: ->
     @projectPath = atom.project.getPaths()[0]
     @projectPath = '.' unless @projectPath
     @rsensePath = atom.config.get('autocomplete-ruby.rsensePath')
-    port = atom.config.get('autocomplete-ruby.port')
-    @serverUrl = "http://localhost:#{port}"
+    @port = atom.config.get('autocomplete-ruby.port')
+    @serverUrl = "http://localhost:#{@port}"
     @rsenseStarted = false
+    @rsenseProcess = null
 
-  startRsense: ->
-    # Before trying to start we need to kill any existing rsense servers, so
-    # as to not end up with multiple rsense servsers unkillable by 'rsense stop'
-    # This means that running two atoms and closing one, kills rsense for the other
-    return if @rsenseStarted == true
-    @rsenseStarted = true
+  startRsenseUnix: =>
+    start = @startRsenseCommand
+    port = @port
+    projectPath = @projectPath
+
+    # This only works for Unix systems
+    exec("ps -ef | head -1; ps -ef | grep java.*rsense.*",
+      (error, stdout, stderr) ->
+        if error != null
+          atom.notifications.addError('Error starting rsense',
+              {detail: "exec error: #{error}", dismissable: true}
+            )
+        else
+          @rsenseProcess = $.grep(TableParser.parse(stdout), (process) ->
+            process.CMD.join(' ').indexOf("--port #{port} --path #{projectPath}") > -1
+          )[0]
+          if @rsenseProcess == undefined || @rsenseProcess == null
+            start()
+          else
+            @rsenseStarted = true
+    )
+
+  startRsenseWin32: =>
+    return if @rsenseStarted
+    start = @startRsenseCommand
 
     exec("#{@rsensePath} stop",
       (error, stdout, stderr) =>
         if error == null
-
-          port = atom.config.get('autocomplete-ruby.port')
-          exec("#{@rsensePath} start --port #{port} --path #{@projectPath}",
-            (error, stdout, stderr) ->
-              if error != null
-                atom.notifications.addError('Error starting rsense',
-                    {detail: "exec error: #{error}", dismissable: true}
-                  )
-                @rsenseStarted = false
-          )
-
+          start()
         else
           atom.notifications.addError('Error stopping rsense',
               {detail: "exec error: #{error}", dismissable: true}
@@ -45,17 +51,33 @@ class RsenseClient
           @rsenseStarted = false
     )
 
-  stopRsense: ->
+  startRsenseCommand: =>
+    return if @rsenseStarted
+    exec("#{@rsensePath} start --port #{@port} --path #{@projectPath}",
+      (error, stdout, stderr) ->
+        if error != null
+          atom.notifications.addError('Error starting rsense',
+              {detail: "exec error: #{error}", dismissable: true}
+            )
+        else
+          @rsenseStarted = true
+    )
+
+  stopRsense: =>
+    if @rsenseProcess
+      process.kill(@rsenseProcess.PID[0], 'SIGKILL');
+    return if !@rsenseStarted
     exec("#{@rsensePath} stop",
       (error, stdout, stderr) ->
         if error != null
           atom.notifications.addError('Error stopping rsense',
               {detail: "exec error: #{error}", dismissable: true}
             )
-        @rsenseStarted = false
+        else
+          @rsenseStarted = false
     )
 
-  checkCompletion: (editor, buffer, row, column, callback) ->
+  checkCompletion: (editor, buffer, row, column, callback) =>
     code = buffer.getText().replaceAll('\n', '\n').
                             replaceAll('%', '%25')
 
