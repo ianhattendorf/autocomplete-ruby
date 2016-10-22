@@ -22,7 +22,7 @@ $ apm install autocomplete-plus
 ## Usage
 Just type some stuff, and autocomplete+ will automatically show you some suggestions.
 
-Note: It might take about 10 seconds after the first suggestions pop up before rsense will give you any suggestions.
+Note: If you use Winows, it might take about 10 seconds after the first suggestions pop up before rsense will give you any suggestions.
 
 ## Bugs
 A lot. If you're brave enough to try this out and notice any specifically, feel free to open an issue or even better submit a pull request.

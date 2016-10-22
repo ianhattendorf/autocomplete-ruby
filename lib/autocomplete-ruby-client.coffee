@@ -14,21 +14,20 @@ class RsenseClient
     @rsenseStarted = false
     @rsenseProcess = null
 
+  # Check if an rsense server is already running.
+  # This can detect all rsense processes even those without pid files.
   startRsenseUnix: =>
     start = @startRsenseCommand
-    port = @port
-    projectPath = @projectPath
 
-    # This only works for Unix systems
-    exec("ps -ef | head -1; ps -ef | grep java.*rsense.*",
+    exec("ps -ef | head -1; ps -ef | grep java",
       (error, stdout, stderr) ->
         if error != null
-          atom.notifications.addError('Error starting rsense',
+          atom.notifications.addError('Error looking for resense process',
               {detail: "exec error: #{error}", dismissable: true}
             )
         else
           @rsenseProcess = $.grep(TableParser.parse(stdout), (process) ->
-            process.CMD.join(' ').indexOf("--port #{port} --path #{projectPath}") > -1
+            process.CMD.join(' ').match( /rsense.*--port.*--path/ )
           )[0]
           if @rsenseProcess == undefined || @rsenseProcess == null
             start()
@@ -36,6 +35,9 @@ class RsenseClient
             @rsenseStarted = true
     )
 
+  # Before trying to start in Windows we need to kill any existing rsense servers, so
+  # as to not end up with multiple rsense servsers unkillable by 'rsense stop'
+  # This means that running two atoms and closing one, kills rsense for the other
   startRsenseWin32: =>
     return if @rsenseStarted
     start = @startRsenseCommand
@@ -63,9 +65,29 @@ class RsenseClient
           @rsenseStarted = true
     )
 
+  # First count how many atom windows are open.
+  # If there is only one open, then kill the rsense process.
+  # This is also able to kill an rsense process without a pid file.
+  # Otherwise do nothing so you will still be able to use rsense in other windows.
+  stopRsenseUnix: =>
+    stopCommand = @stopRsense
+
+    exec("ps -ef | head -1; ps -ef | grep atom",
+      (error, stdout, stderr) ->
+        if error != null
+          atom.notifications.addError('Error looking for atom process',
+              {detail: "exec error: #{error}", dismissable: true}
+            )
+        else
+          @atomProcesses = $.grep(TableParser.parse(stdout), (process) ->
+            process.CMD.join(' ').match( /--type=renderer.*--node-integration=true/ )
+          )
+          if @atomProcesses.length < 2
+            process.kill(@rsenseProcess.PID[0], 'SIGKILL') if @rsenseProcess
+            stopCommand()
+    )
+
   stopRsense: =>
-    if @rsenseProcess
-      process.kill(@rsenseProcess.PID[0], 'SIGKILL');
     return if !@rsenseStarted
     exec("#{@rsensePath} stop",
       (error, stdout, stderr) ->
