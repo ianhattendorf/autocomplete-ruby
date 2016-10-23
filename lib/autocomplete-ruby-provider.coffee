@@ -1,4 +1,5 @@
 RsenseClient = require './autocomplete-ruby-client.coffee'
+IS_WIN32 = process.platform == 'win32'
 
 String.prototype.regExpEscape = () ->
   return @replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")
@@ -14,10 +15,11 @@ class RsenseProvider
 
   constructor: ->
     @rsenseClient = new RsenseClient()
+    @rsenseClient.startRsenseUnix() if !IS_WIN32
     @lastSuggestions = []
 
   getSuggestions: ({editor, bufferPosition, scopeDescriptor, prefix}) ->
-    @rsenseClient.startRsense()
+    @rsenseClient.startRsenseWin32() if IS_WIN32
     new Promise (resolve) =>
       # rsense expects 1-based positions
       row = bufferPosition.row + 1
@@ -73,4 +75,5 @@ class RsenseProvider
     return suggestionBuffer
 
   dispose: ->
-    @rsenseClient.stopRsense() if @rsenseClient.rsenseStarted
+    return @rsenseClient.stopRsense() if IS_WIN32
+    @rsenseClient.stopRsenseUnix()
