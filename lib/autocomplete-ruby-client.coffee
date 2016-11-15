@@ -23,7 +23,7 @@ class RsenseClient
       (error, stdout, stderr) ->
         if error != null
           atom.notifications.addError('Error looking for resense process',
-              {detail: "exec error: #{error}", dismissable: true}
+              {detail: "autocomplete-ruby: exec error: #{error}", dismissable: true}
             )
         else
           @rsenseProcess = $.grep(TableParser.parse(stdout), (process) ->
@@ -48,7 +48,7 @@ class RsenseClient
           start()
         else
           atom.notifications.addError('Error stopping rsense',
-              {detail: "exec error: #{error}", dismissable: true}
+              {detail: "autocomplete-ruby: exec error: #{error}", dismissable: true}
             )
           @rsenseStarted = false
     )
@@ -59,7 +59,7 @@ class RsenseClient
       (error, stdout, stderr) ->
         if error != null
           atom.notifications.addError('Error starting rsense',
-              {detail: "exec error: #{error}", dismissable: true}
+              {detail: "autocomplete-ruby: exec error: #{error}", dismissable: true}
             )
         else
           @rsenseStarted = true
@@ -76,7 +76,7 @@ class RsenseClient
       (error, stdout, stderr) ->
         if error != null
           atom.notifications.addError('Error looking for atom process',
-              {detail: "exec error: #{error}", dismissable: true}
+              {detail: "autocomplete-ruby: exec error: #{error}", dismissable: true}
             )
         else
           @atomProcesses = $.grep(TableParser.parse(stdout), (process) ->
@@ -93,7 +93,7 @@ class RsenseClient
       (error, stdout, stderr) ->
         if error != null
           atom.notifications.addError('Error stopping rsense',
-              {detail: "exec error: #{error}", dismissable: true}
+              {detail: "autocomplete-ruby: exec error: #{error}", dismissable: true}
             )
         else
           @rsenseStarted = false
