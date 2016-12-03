@@ -16,8 +16,10 @@ Make sure you have Java installed on your machine.
 Install required gems and Atom packages:
 ```shell
 $ gem install rsense
-$ apm install autocomplete-plus
+$ apm install autocomplete-plus (is preinstalled with Atom)
 ```
+
+If you need to set up the rsense path, execute `gem environment`: Then take the `EXECUTABLE DIRECTORY`, add `rsense` and put this into the rsense executable path.
 
 ## Usage
 Just type some stuff, and autocomplete+ will automatically show you some suggestions.
