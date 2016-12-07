@@ -1,6 +1,20 @@
 RsenseProvider = require './autocomplete-ruby-provider.coffee'
+exec = require('child_process').exec
 
-GEM_HOME = process.env.GEM_HOME ? '~/.gem/ruby/2.3.0'
+platformHome = process.env[if process.platform is 'win32' then 'USERPROFILE' else 'HOME']
+
+getExecPathFromGemEnv = ->
+  exec 'gem environment', (err, stdout, stderr) ->
+    unless err
+      line = stdout.split(/(\r)?\n/)
+               .find((l) -> ~l.indexOf('EXECUTABLE DIRECTORY'))
+      if line
+        line[line.indexOf(': ')..]
+      else
+        undefined
+
+GEM_HOME = process.env.GEM_HOME ? getExecPathFromGemEnv() ? "#{platformHome}/.gem/ruby/2.3.0"
+  
 
 module.exports =
   config:
