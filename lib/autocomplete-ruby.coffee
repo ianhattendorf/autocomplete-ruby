@@ -14,6 +14,10 @@ module.exports =
       default: 47367
       minimum: 1024
       maximum: 65535
+    suggestionPriority:
+      description: 'Show autocomplete-ruby content before default autocomplete-plus provider'
+      default: false
+      type: 'boolean'
 
   rsenseProvider: null
 
