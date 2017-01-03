@@ -8,8 +8,10 @@ module.exports =
 class RsenseProvider
   selector: '.source.ruby'
   disableForSelector: '.source.ruby .comment'
+  @suggestionPriority = atom.config.get('autocomplete-ruby.suggestionPriority')
 
   inclusionPriority: 1
+  suggestionPriority: 2 if @suggestionPriority == true
 
   rsenseClient: null
 
