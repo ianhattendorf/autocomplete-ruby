@@ -1,13 +1,12 @@
 RsenseProvider = require './autocomplete-ruby-provider.coffee'
-
-GEM_HOME = process.env.GEM_HOME ? '~/.gem/ruby/2.3.0'
+GEM_HOME = require('./gem-home.coffee')
 
 module.exports =
   config:
     rsensePath:
       description: 'The location of the rsense executable'
       type: 'string'
-      default: "#{GEM_HOME}/bin/rsense"
+      default: "#{GEM_HOME}/rsense"
     port:
       description: 'The port the rsense server is running on'
       type: 'integer'
