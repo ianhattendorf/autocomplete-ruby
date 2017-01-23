@@ -6,7 +6,7 @@ module.exports =
     rsensePath:
       description: 'The location of the rsense executable'
       type: 'string'
-      default: "#{GEM_HOME}/bin/rsense"
+      default: "#{GEM_HOME}/rsense"
     port:
       description: 'The port the rsense server is running on'
       type: 'integer'
