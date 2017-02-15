@@ -7,19 +7,20 @@ Provides intelligent code completion for Ruby. Requires [RSense](https://github.
 ## Status
 Currently pre-alpha, buggy and not fully implemented. All help is welcome.
 
+Note: It doesn't seem like [RSense](https://github.com/rsense/rsense) is being developed any more. Any bugs/issues related to rsense itself will need to be reported in that repo, and probably won't be fixed.
+
 ## Why?
-Because I wanted Ruby code completion in Atom and [atom-rsense](https://github.com/rsense/atom-rsense) hasn't been updated since June 2014, which is a long time for an Atom package. It's currently broken and I didn't like the dependency on Opal, as much as I enjoy Ruby, so I decided to create this.
+Because I wanted Ruby code completion in Atom and [atom-rsense](https://github.com/rsense/atom-rsense) is broken and hasn't been updated since June 2014.
 
 ## Installation
 Make sure you have Java installed on your machine.
 
-Install required gems and Atom packages:
+Install rsense:
 ```shell
 $ gem install rsense
-$ apm install autocomplete-plus (is preinstalled with Atom)
 ```
 
-If you need to set up the rsense path, execute `gem environment`: Then take the `EXECUTABLE DIRECTORY`, add `rsense` and put this into the rsense executable path.
+If you get an error about not being able to find `rsense` after opening a ruby file, you will need to set the path to the rsense binary in the plugin settings. The path is different depending on which OS/Ruby environment manager you are using. Executing `which rsense` or `gem environment` might help you locate it.
 
 ## Usage
 Just type some stuff, and autocomplete+ will automatically show you some suggestions.
