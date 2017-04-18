@@ -27,8 +27,11 @@ Just type some stuff, and autocomplete+ will automatically show you some suggest
 
 Note: If you use Winows, it might take about 10 seconds after the first suggestions pop up before rsense will give you any suggestions.
 
-## Bugs
-A lot. If you're brave enough to try this out and notice any specifically, feel free to open an issue or even better submit a pull request.
+## Known Issues
+- Sometimes the environment isn't configured correctly when launching Atom from it's launcher (any custom config in `.bashrc`, `.bash_profile`, etc.). If you have any issues with the plugin, please try launching atom from the terminal first: `$ atom`.
+- RSense doesn't appear to work on Windows.
+
+Feel free to report any other issues you encounter.
 
 ## Development
 Clone the repository into your working directory:
