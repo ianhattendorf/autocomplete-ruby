@@ -5,9 +5,9 @@
 Provides intelligent code completion for Ruby. Requires [RSense](https://github.com/rsense/rsense) and [Autocomplete+](https://github.com/atom-community/autocomplete-plus).
 
 ## Status
-Currently pre-alpha, buggy and not fully implemented. All help is welcome.
+Works for the most part, however **not on Windows**. This is due to a bug in [RSense](https://github.com/rsense/rsense), which is no longer being developed. Any bugs/issues related to rsense itself will need to be reported in that repo, and probably won't be fixed.
 
-Note: It doesn't seem like [RSense](https://github.com/rsense/rsense) is being developed any more. Any bugs/issues related to rsense itself will need to be reported in that repo, and probably won't be fixed.
+Please read the [Known Issues](#known-issues) before reporting any issues.
 
 ## Why?
 Because I wanted Ruby code completion in Atom and [atom-rsense](https://github.com/rsense/atom-rsense) is broken and hasn't been updated since June 2014.
