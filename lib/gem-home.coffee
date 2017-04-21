@@ -12,4 +12,10 @@ getExecPathFromGemEnv = ->
   else
     undefined
 
-module.exports = process.env.GEM_HOME ? getExecPathFromGemEnv() ? "#{platformHome}/.gem/ruby/2.3.0"
+gemHome = ->
+  if process.env.GEM_HOME
+    "#{process.env.GEM_HOME}/bin"
+  else
+    getExecPathFromGemEnv() ? "#{platformHome}/.gem/ruby/2.3.0"
+
+module.exports = gemHome()
