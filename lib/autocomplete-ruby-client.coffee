@@ -86,7 +86,11 @@ class RsenseClient
             process.CMD.join(' ').match( /--type=renderer.*--node-integration=true/ )
           )
           if @atomProcesses.length < 2
-            process.kill(@rsenseProcess.PID[0], 'SIGKILL') if @rsenseProcess
+            try
+              process.kill(@rsenseProcess.PID[0], 'SIGKILL') if @rsenseProcess
+            catch ex
+              # ignore error if kill fails
+              console.debug "exception killing process: #{ex}"
             stopCommand()
     )
 
