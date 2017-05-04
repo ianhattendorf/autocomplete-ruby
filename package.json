@@ -1,7 +1,7 @@
 {
   "name": "autocomplete-ruby",
   "main": "./lib/autocomplete-ruby",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "author": {
     "name": "Ian Hattendorf",
     "email": "ianhattendorf@gmail.com",
