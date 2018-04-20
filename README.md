@@ -4,6 +4,11 @@
 
 Provides intelligent code completion for Ruby. Requires [RSense](https://github.com/rsense/rsense) and [Autocomplete+](https://github.com/atom-community/autocomplete-plus).
 
+## :no_entry: [UNMAINTAINED]
+[RSense](https://github.com/rsense/rsense) hasn't been actively developed since late 2014 leaving many unresolved bugs.
+
+For a possible alternative, see [atom-solargraph](https://github.com/castwide/atom-solargraph), based on [solargraph](https://github.com/castwide/solargraph), which is currently (April 2018) seeing active development.
+
 ## Status
 Works for the most part, however **not on Windows**. This is due to a bug in [RSense](https://github.com/rsense/rsense), which is no longer being developed. Any bugs/issues related to rsense itself will need to be reported in that repo, and probably won't be fixed.
 
